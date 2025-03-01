@@ -1,0 +1,144 @@
+.menubar{
+  width: 100%;
+  height: 80px;
+  background-color: rgb(43, 0, 83);
+  border-bottom: 1px solid rgb(255, 215, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.menubar input{
+  width: 25%;
+  height: 45%;
+  border: 0;
+  outline: 0;
+  padding-left: 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  background-color: rgb(232, 207, 255);
+  margin-right: 30px;
+  margin-left: 30px;
+}
+.menubar button{
+  width: 120px;
+  height: 45%;
+  border: 0;
+  outline: 0;
+  border-radius: 5px;
+  background-color: rgb(47, 169, 210);
+  color: white;
+  font-family: sans-serif;
+  letter-spacing: 1px;
+  font-size: 16px;
+  padding: 10px;
+  cursor: pointer;
+}
+.menubar button:hover{
+  background-color: rgb(119, 55, 179);
+  transition: all .3s;
+}
+/* From Uiverse.io by Madflows */ 
+.button {
+  position: relative;
+  overflow: hidden;
+  height: 2rem;
+  padding: 0 1rem;
+  border-radius: 1.5rem;
+  background: #3d3a4e;
+  background-size: 400%;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.button:hover::before {
+  transform: scaleX(1);
+}
+
+.button-content {
+  position: relative;
+  z-index: 1;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  width: 100%;
+  height: inherit;
+  border-radius: inherit;
+  background: linear-gradient(
+    82.3deg,
+    rgba(150, 93, 233, 1) 10.8%,
+    rgba(99, 88, 238, 1) 94.3%
+  );
+  transition: all 0.475s;
+}
+.imgcontainer{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+}
+.imgbox{
+  width: 280px;
+  height: 370px;
+  text-align: center;
+  margin: 5px;
+ border: 2px solid purple;
+ border-radius: 5px;
+ margin-bottom: 14px;
+
+}
+.imgbox:hover{
+  box-shadow: 5px 5px 19px rgb(254, 178, 255);
+  transition: all .3s;
+}
+img{
+  width: 100%;
+  height: 80%;
+  /* margin: 5px; */
+}
+@media screen and (max-width:600px){
+
+  .menubar button{
+    width: 100px;
+    font-size: 13px;
+    padding: 0;
+    margin-right: 3px;
+    margin-left:5px;
+  }
+  .menubar input{
+    width: 130px;
+    font-size: 13px;
+    margin-right: -2px;
+  }
+  .menubar h2{
+    font-size: 15px;
+  }
+  
+  }
+@media screen and (max-width:400px){
+
+.menubar button{
+  width: 100px;
+  font-size: 13px;
+  padding: 0;
+  margin-right: 3px;
+  margin-left:5px;
+}
+.menubar input{
+  width: 100px;
+  font-size: 13px;
+  margin-right: -2px;
+}
+.menubar h2{
+  font-size: 15px;
+}
+
+}
