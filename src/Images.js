@@ -1,58 +1,119 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import axios from 'axios';
+
 const Images = () => {
     const apiId = `0MnTzmKDssTeGJGWrXnlq1J47hZsLjuPaS4KIqMf7Ho`;
     const [imgdata, setimgdata] = useState([]);
     const [query, setquery] = useState('');
     const [loading, setloading] = useState(false);
-    const [err, seterr] = useState('');
-    const [msg, setmsg] = useState("Search Image You Want");
+    const [error, seterror] = useState('');
+    const [msg, setmsg] = useState("Visual Search Engine for the Next Gen.");
+
     const fetchimg = async () => {
+        const searchTerm = query.trim();
+        if (!searchTerm) {
+            setmsg("Please enter a search term");
+            return;
+        }
+
         setloading(true);
+        seterror('');
+        setmsg("Loading...");
         try {
-            const response = await axios.get(`https://api.unsplash.com/search/photos?query=${query}&client_id=${apiId}`);
-            setimgdata(response.data.results);
+            const response = await axios.get(
+                `https://api.unsplash.com/search/photos?query=${searchTerm}&client_id=${apiId}`
+            );
+            const results = response.data.results;
+            setimgdata(results);
 
-        }
-        catch (err) {
-            seterr('Image Not Found');
+            if (results.length === 0) {
+                setmsg("No images found");
+            } else {
+                setmsg(`Results for "${searchTerm}"`);
+            }
+
+            setquery('');
+        } catch (err) {
+            seterror('Image Not Found');
+            setmsg('Image not found');
+        } finally {
             setloading(false);
         }
-        finally {
-            setloading(false);
-            setmsg(query)
-        }
-    }
+    };
 
+    const handelkey = (e) => {
+        if (e.key === 'Enter') {
+            fetchimg();
+        }
+    };
 
     return (
-        <div>
+        <div className='imgapp'>
+            <h1 className='mytag'>Devloped by Zeeshan sheikh</h1>
             <nav className='menubar'>
-                <h2 style={{ color: 'white', fontWeight: '400' }}>ZackPac Images</h2>
-                <input onChange={(e) => setquery(e.target.value)} />
-                <button onClick={fetchimg}>Fetch data</button>
+                
+                <input
+                    onChange={(e) => setquery(e.target.value)}
+                    value={query}
+                    placeholder='Search...'
+                    onKeyDown={handelkey}
+                    disabled={loading}
+                />
+                {/* <span style={{ color: 'white', fontWeight: '400' }}>Devloped By Zeeshn</span> */}
             </nav>
-            <h1 style={{
-                textAlign: 'center', marginBottom: '40px', fontFamily: 'sans-serif', fontWeight: '400 ',
-                color: 'darkpurple'
-            }}>{msg}</h1>
-            {loading && <p style={{ textAlign: 'center' }}>loading....</p>}
-            {err && <p style={{ textAlign: 'center',color:'red' }}>Image not found</p>}
+            <div className='msgbox'>
+
+            {!error && !loading && (
+                <h1
+                    style={{
+                        textAlign: 'center',
+                        marginBottom: '40px',
+                        fontFamily: 'sans-serif',
+                        fontWeight: '400',
+                        color: 'black'
+                    }}
+                >
+                    {msg}
+                </h1>
+            )}
+
+            {loading && (
+                <h1
+                    style={{
+                        textAlign: 'center',
+                        marginBottom: '40px',
+                        fontFamily: 'sans-serif',
+                        fontWeight: '400',
+                        color: 'black'
+                    }}
+                >
+                    Loading...
+                </h1>
+            )}
+
+            {error && (
+                <p style={{ textAlign: 'center', color: 'red' }}>
+                    Image not found
+                </p>
+            )}
+</div>
             <div className='imgcontainer'>
                 {imgdata.map((img, index) => (
                     <div className='imgbox' key={index}>
-                        <img src={img.urls.small} />
-                        <a href={img.links.download} target='blank'><button class="button">
-                            <span class="button-content">Download </span>
-                        </button>
+                        <img
+                            src={img.urls.small}
+                            alt={img.alt_description || 'Unsplash Image'}
+                        />
+                        <a href={img.links.download} target='_blank' rel='noopener noreferrer'>
+                            <button className="button">
+                                <span className="button-content">Download</span>
+                            </button>
                         </a>
-
                     </div>
                 ))}
             </div>
-
         </div>
-    )
-}
+    );
+};
 
-export default Images
+export default Images;
